@@ -1,0 +1,88 @@
+#include<iostream>
+#include<string>
+
+int StringParse(std::string inputString, size_t commaPos)
+{
+	std::string firstWord;
+	std::string secondWord;
+	size_t size = inputString.size();
+
+	int j = 0;
+
+	//assuming that works:
+	for (int i = 0; i < commaPos; i++)
+	{
+		if (isalpha(inputString.at(i)))
+		{
+			firstWord.push_back(' ');
+			firstWord.at(i) = inputString.at(i);
+		}
+	}
+
+	for (int i = commaPos; i < size; i++)
+	{
+		if (isalpha(inputString.at(i)))
+		{
+			secondWord.push_back(' ');
+			secondWord.at(j) = inputString.at(i);
+
+			j++;
+		}
+	}
+
+	std::cout << "First word: " << firstWord << std::endl;
+	std::cout << "Second word: " << secondWord << std::endl << std::endl;
+
+	return 0;
+}
+
+int GetLoop(std::string &inputString, size_t &commaPos)
+{
+	getline(std::cin, inputString);
+
+	commaPos = inputString.find(',');
+
+	if (commaPos != std::string::npos)
+	{
+		return 0;
+	}
+
+	if (inputString == "q")
+	{
+		return 0;
+	}
+   
+   std::cout << "Error: No comma in string.\n\n";
+	return -1;
+}
+
+int main() 
+{
+	std::string inputString;
+	std::string firstWord;
+	std::string secondWord;
+
+	size_t commaPos;
+
+	int loopInt = -1;
+
+	while (true)
+	{
+		while (loopInt == -1)
+		{
+		   std::cout << "Enter input string:\n";
+			loopInt = GetLoop(inputString, commaPos);
+		}
+
+		if (inputString == "q")
+		{
+			return 0;
+		}
+
+		StringParse(inputString, commaPos);
+		loopInt = -1;
+	}
+
+	std::cout << "Massive system error";
+	return -1;
+}
